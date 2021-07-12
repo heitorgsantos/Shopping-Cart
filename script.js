@@ -1,4 +1,5 @@
 const baseUrl = 'https://api.mercadolibre.com/sites/MLB/';
+const clear = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -26,15 +27,15 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
-}
+// function getSkuFromProductItem(item) {
+//   return item.querySelector('span.item__sku').innerText;
+// }
 
 function cartItemClickListener(event) {
-
+  event.target.remove(); 
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
@@ -47,22 +48,28 @@ async function getProducts() {
   .then((response) => response.json()); 
 }
 
+async function getProductId(event) {
+  const id = event.target.previousSibling.previousSibling.previousSibling.innerText;
+  const requisition = await fetch(`https://api.mercadolibre.com/items/${id}`)
+  .then((response) => response.json());
+  const divFatherOl = document.querySelector('.cart__items');
+  divFatherOl.appendChild(createCartItemElement(requisition));
+}
+
+async function getItemButton() {
+  const itemButton = document.querySelectorAll('.item__add');
+  itemButton.forEach((button) => button.addEventListener('click', getProductId));
+  // console.log(itemButton);
+}
+
 window.onload = async () => {
   const product = await getProducts();
   product.results.forEach((produto) => {
     const element = createProductItemElement(produto);
-
+    
     const items = document.querySelector('.items');
     items.appendChild(element);
   });
-};
+  getItemButton();
 
-// function addProducts(id) {
-//   const response = fetch(`https://api.mercadolibre.com/items/${id}`);
-//   const product = response.json();
-//   return product;
-// }
-// addProducts();
-// function getButtonProducts () {
-//   const addCart = document.querySelectorAll('.item_add');
-//   addCart.addEventListener('click', addProducts);
+};
