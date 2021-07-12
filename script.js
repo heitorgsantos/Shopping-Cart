@@ -1,5 +1,5 @@
 const baseUrl = 'https://api.mercadolibre.com/sites/MLB/';
-const clear = document.querySelector('.empty-cart');
+// const clear = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
