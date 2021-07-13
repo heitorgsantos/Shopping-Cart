@@ -35,10 +35,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
 
 // function getSkuFromProductItem(item) {
   //   return item.querySelector('span.item__sku').innerText;
-  // }
- 
+// }
 
-// insere no local storage
 function localStoraged() {
   const setItemLocalStorage = divFatherOl.innerHTML;
   localStorage.setItem('divFatherOl', JSON.stringify(setItemLocalStorage));
@@ -73,7 +71,6 @@ async function getProductId(event) {
 async function getItemButton() {
   const itemButton = document.querySelectorAll('.item__add');
   itemButton.forEach((button) => button.addEventListener('click', getProductId));
-  // console.log(itemButton);
 }
 
 function getLocalStorage() {
