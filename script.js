@@ -37,6 +37,7 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) {
   //   return item.querySelector('span.item__sku').innerText;
 // }
 
+// salvando em localStorage 
 function localStoraged() {
   const setItemLocalStorage = divFatherOl.innerHTML;
   localStorage.setItem('divFatherOl', JSON.stringify(setItemLocalStorage));
@@ -72,7 +73,7 @@ async function getItemButton() {
   const itemButton = document.querySelectorAll('.item__add');
   itemButton.forEach((button) => button.addEventListener('click', getProductId));
 }
-
+// recuperando localStorage com getItem
 function getLocalStorage() {
   const getItem = localStorage.getItem('divFatherOl');
   divFatherOl.innerHTML = JSON.parse(getItem);
